@@ -10,6 +10,7 @@ django-cryptography = "*"
 djangorestframework = "*"
 psycopg = {extras = ["binary"], version = "*"}
 djangorestframework-simplejwt = "*"
+werkzeug = "*"
 
 [dev-packages]
 black = "*"
