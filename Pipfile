@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 django = "*"
+python-creditcard = {editable = true, ref = "main", git = "https://github.com/maistodos/python-creditcard.git"}
+django-cryptography = "*"
 
 [dev-packages]
 black = "*"

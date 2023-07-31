@@ -20,3 +20,8 @@ class CreditCardModelTests(TestCase):
         self.valid_credit_card.holder = "A"
         with self.assertRaises(ValidationError):
             self.valid_credit_card.full_clean()
+
+    def test_invalid_number(self):
+        self.valid_credit_card.number = "0000000000000001"
+        with self.assertRaises(ValidationError):
+            self.valid_credit_card.full_clean()
