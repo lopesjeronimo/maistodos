@@ -1,5 +1,7 @@
 import datetime
 
+import freezegun
+import rest_framework.exceptions
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
@@ -38,19 +40,30 @@ class CreditCardModelTests(TestCase):
             self.credit_card.save()
 
 
-
 class CreditCardSerializerTests(TestCase):
-
+    @freezegun.freeze_time("2023-08-05")
     def test_valid_payload(self):
-        payload = {
-            "holder": "Fulano",
-            "number": "4539578763621486",
-            "exp_date": "06/2030"
-        }
+        payload = {"holder": "Fulano", "number": "4539578763621486", "exp_date": "06/2030"}
 
         credit_card_serializer = CreditCardSerializer(data=payload)
-        assert credit_card_serializer.is_valid(raise_exception=True)
+        self.assertTrue(credit_card_serializer.is_valid(raise_exception=True))
         credit_card_serializer.save()
 
         credit_card: CreditCard = CreditCard.objects.last()
         self.assertEquals(credit_card.exp_date, datetime.date(2030, 6, 30))
+
+    @freezegun.freeze_time("2023-08-05")
+    def test_invalid_exp_date(self):
+        payload = {"holder": "Fulano", "number": "4539578763621486", "exp_date": "2023-07"}
+        credit_card_serializer = CreditCardSerializer(data=payload)
+
+        with self.assertRaises(rest_framework.exceptions.ValidationError):
+            credit_card_serializer.is_valid(raise_exception=True)
+
+    @freezegun.freeze_time("2023-08-05")
+    def test_past_exp_date(self):
+        payload = {"holder": "Fulano", "number": "4539578763621486", "exp_date": "07/2023"}
+        credit_card_serializer = CreditCardSerializer(data=payload)
+
+        with self.assertRaises(rest_framework.exceptions.ValidationError):
+            credit_card_serializer.is_valid(raise_exception=True)

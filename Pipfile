@@ -12,6 +12,7 @@ djangorestframework = "*"
 [dev-packages]
 black = "*"
 isort = "*"
+freezegun = "*"
 
 [requires]
 python_version = "3.11"

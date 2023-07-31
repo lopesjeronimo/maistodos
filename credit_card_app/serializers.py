@@ -1,14 +1,20 @@
 import calendar
+import datetime
 
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from credit_card_app.models import CreditCard
 
 
-class ExpirationDateField(serializers.DateField):
+def future_date_validator(value: datetime.date):
+    if datetime.date.today() > value:
+        raise ValidationError()
 
+
+class ExpirationDateField(serializers.DateField):
     def __init__(self, *args, **kwargs):
-        super().__init__(input_formats=['%m/%Y'], *args, **kwargs)
+        super().__init__(input_formats=["%m/%Y"], validators=[future_date_validator], *args, **kwargs)
 
     def to_internal_value(self, value):
         date_value = super().to_internal_value(value)
@@ -17,9 +23,8 @@ class ExpirationDateField(serializers.DateField):
 
 
 class CreditCardSerializer(serializers.ModelSerializer):
-
     exp_date = ExpirationDateField()
 
     class Meta:
         model = CreditCard
-        fields = '__all__'
+        fields = "__all__"
