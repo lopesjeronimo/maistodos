@@ -1,9 +1,11 @@
 import datetime
+from collections import OrderedDict
 
 import freezegun
 import rest_framework.exceptions
 from django.core.exceptions import ValidationError
 from django.test import TestCase
+from rest_framework.test import APITestCase
 
 from credit_card_app.models import CreditCard
 from credit_card_app.serializers import CreditCardSerializer
@@ -71,3 +73,11 @@ class CreditCardSerializerTests(TestCase):
 
         with self.assertRaises(rest_framework.exceptions.ValidationError):
             credit_card_serializer.is_valid(raise_exception=True)
+
+
+class CreditCardAPITests(APITestCase):
+    def test_list(self):
+        credit_card = CreditCard(holder="Fulano", number="4539578763621486", exp_date=datetime.date(2023, 12, 31))
+        credit_card.save()
+        response = self.client.get("/api/v1/credit-card/")
+        self.assertEquals(response.status_code, 200)

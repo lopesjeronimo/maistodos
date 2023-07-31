@@ -14,7 +14,7 @@ def future_date_validator(value: datetime.date):
 
 class ExpirationDateField(serializers.DateField):
     def __init__(self, *args, **kwargs):
-        super().__init__(input_formats=["%m/%Y"], validators=[future_date_validator], *args, **kwargs)
+        super().__init__(format="%m/%Y", input_formats=["%m/%Y"], validators=[future_date_validator], *args, **kwargs)
 
     def to_internal_value(self, value):
         date_value = super().to_internal_value(value)
@@ -29,4 +29,4 @@ class CreditCardSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CreditCard
-        fields = ['exp_date', "holder", "number", "cvv", "brand"]
+        fields = ["exp_date", "holder", "number", "cvv", "brand", "id"]
