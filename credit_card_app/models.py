@@ -17,4 +17,4 @@ class CreditCard(models.Model):
     exp_date = models.DateField()
     holder = models.CharField(max_length=255, validators=[MinLengthValidator(2)])
     number = encrypt(models.CharField(db_column="number", max_length=16, validators=[credid_card_number_validator]))
-    cvv = models.CharField(max_length=4, null=True)
+    cvv = models.CharField(max_length=4, null=True, blank=True, validators=[MinLengthValidator(3)])
