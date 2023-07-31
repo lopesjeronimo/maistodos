@@ -39,6 +39,9 @@ class CreditCardModelTests(TestCase):
             self.credit_card.full_clean()
             self.credit_card.save()
 
+    def test_brand(self):
+        self.assertEquals(self.credit_card.brand, "visa")
+
 
 class CreditCardSerializerTests(TestCase):
     @freezegun.freeze_time("2023-08-05")
@@ -51,6 +54,7 @@ class CreditCardSerializerTests(TestCase):
 
         credit_card: CreditCard = CreditCard.objects.last()
         self.assertEquals(credit_card.exp_date, datetime.date(2030, 6, 30))
+        self.assertEquals(credit_card.brand, "visa")
 
     @freezegun.freeze_time("2023-08-05")
     def test_invalid_exp_date(self):

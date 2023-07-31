@@ -16,5 +16,21 @@ def credid_card_number_validator(value):
 class CreditCard(models.Model):
     exp_date = models.DateField()
     holder = models.CharField(max_length=255, validators=[MinLengthValidator(2)])
-    number = encrypt(models.CharField(db_column="number", max_length=16, validators=[credid_card_number_validator]))
+    _number = encrypt(models.CharField(db_column="number", max_length=16, validators=[credid_card_number_validator]))
     cvv = models.CharField(max_length=4, null=True, blank=True, validators=[MinLengthValidator(3)])
+    brand = models.CharField(max_length=255)
+
+    @property
+    def number(self):
+        return self._number
+
+    @number.setter
+    def number(self, value):
+        self._number = value
+        try:
+            cc = creditcard.CreditCard(value)
+            self.brand = cc.get_brand()
+        except creditcard.card.BrandNotFound:
+            # TODO: numeber validator will handle invalid numbers, is that the best way to handle?
+            # can I have a valid number without a valid brand?
+            self.brand = None

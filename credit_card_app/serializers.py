@@ -24,7 +24,9 @@ class ExpirationDateField(serializers.DateField):
 
 class CreditCardSerializer(serializers.ModelSerializer):
     exp_date = ExpirationDateField()
+    brand = serializers.CharField(read_only=True)
+    number = serializers.CharField()
 
     class Meta:
         model = CreditCard
-        fields = "__all__"
+        fields = ['exp_date', "holder", "number", "cvv", "brand"]
