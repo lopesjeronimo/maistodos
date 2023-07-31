@@ -64,9 +64,28 @@ GET http://localhost:8000/api/credit-card
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkwODI1MTQzLCJpYXQiOjE2OTA4MjQ4NDMsImp0aSI6IjVhNTZmNWM5ZWM0NDQ4NDNiNDc4ZDA5NjA0Y2FmY2EyIiwidXNlcl9pZCI6M30.Bh1ACfZd82m8G8Smps3PxoKcckiLPzhgU7dHLd3rnDE
 ```
 
-
-## Antes de commitar, rodar os formatadores de código
+## Code Formatter
+Antes de commitar, rodar os formatadores de código
 ```shell
-black .
-isort .
+docker compose run --rm web pipenv run black .
+docker compose run --rm web pipenv run isort .
 ```
+
+## Considerações sobre o projeto
+Foi utilizado o [Pipenv](https://pipenv.pypa.io/en/latest/) para simplificar o gerenciamento de dependencias
+
+Inicialmente não seria utilizado o Docker, porém ficou mais fácil de garantir que o projeto poderia rodar em diferentes
+sistemas operacionais sem a necessidade de instalar e gerenciar manualemente a versão do Python.
+
+### Dependencias
+* [`django`](https://docs.djangoproject.com/en/4.2/): pode parecer um pouco de "overengeniering" usar um framework tão completo e robusto para uma API simples, com apenas um recurso. Porém é compensando na simplicidade do código, devido ao conjunto de funcionalidades e "baterias incluidas", como por exemplo itegração com banco de dados e ambiente de testes de integração;
+* [`python-creditcard`](https://github.com/MaisTodos/python-creditcard): validação do número de cartão de crédito.
+* [`django-cryptography`](https://github.com/georgemarshall/django-cryptography): para gravar número do cartão de crédito de forma criptografada.
+* [`djangorestframework`](https://www.django-rest-framework.org): recursos para simplificar a construção da API.
+* [`psycopg`](https://www.psycopg.org): driver para o PostgreSQL.
+* [`djangorestframework-simplejwt`](https://github.com/jazzband/djangorestframework-simplejwt): simplificar o uso de tokens JWT para autenticação.
+
+Ambiente de desenvolvimento:
+* [`black`](https://github.com/psf/black): formatador de código padronizado.
+* [`isort`](https://github.com/pycqa/isort/): organizar imports de forma padronizada.
+* [`freezegun`](https://github.com/spulec/freezegun): mock para testes automatizados envolvendo data e horário.
