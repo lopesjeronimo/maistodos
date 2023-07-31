@@ -64,6 +64,27 @@ GET http://localhost:8000/api/v1/credit-card/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkwODI1MTQzLCJpYXQiOjE2OTA4MjQ4NDMsImp0aSI6IjVhNTZmNWM5ZWM0NDQ4NDNiNDc4ZDA5NjA0Y2FmY2EyIiwidXNlcl9pZCI6M30.Bh1ACfZd82m8G8Smps3PxoKcckiLPzhgU7dHLd3rnDE
 ```
 
+## Deploy e ambiente de producao
+
+Para realizar o deploy ou conectar o container do banco de dados de producao
+basta fazer uma copia do seguinte arquivo:
+```shell
+cp .env.example .env
+# edite o .env inserindo os dados do banco de producao
+```
+
+Aqui você pode usar os mesmos comandos utilizados no teste local para criar um usuário
+no banco de dados de produção.
+O docker vai carregar automaticamente as variaveis de ambiente definidas em um arquivo `.env`
+
+Para o deploy você precisa instalar o Node.js: https://nodejs.org/en
+
+```shell
+# instalando as dependencias 
+npm install
+./node_modules/serverless/bin/serverless.js deploy
+```
+
 ## Code Formatter
 Antes de commitar, rodar os formatadores de código
 ```shell
