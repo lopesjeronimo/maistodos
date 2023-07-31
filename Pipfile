@@ -8,6 +8,7 @@ django = "*"
 python-creditcard = {editable = true, ref = "main", git = "https://github.com/maistodos/python-creditcard.git"}
 django-cryptography = "*"
 djangorestframework = "*"
+psycopg = {extras = ["binary"], version = "*"}
 
 [dev-packages]
 black = "*"

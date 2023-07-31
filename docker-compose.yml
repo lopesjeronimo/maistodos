@@ -1,0 +1,21 @@
+
+services:
+
+  web:
+    build: .
+    command: pipenv run ./manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    environment:
+      DJANGO_SETTINGS_MODULE: "maistodos.settings"
+    depends_on:
+      - db
+    network_mode: "host"
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - 5432:5432
+    network_mode: "host"
