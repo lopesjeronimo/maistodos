@@ -3,6 +3,7 @@ from collections import OrderedDict
 
 import freezegun
 import rest_framework.exceptions
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 from rest_framework.test import APITestCase
@@ -76,8 +77,23 @@ class CreditCardSerializerTests(TestCase):
 
 
 class CreditCardAPITests(APITestCase):
+    def test_unauthenticated(self):
+        response = self.client.get("/api/v1/credit-card/")
+        self.assertEquals(response.status_code, 403)
+
     def test_list(self):
+        username = "john"
+        password = "johnpassword"
+        User.objects.create_user(username, "lennon@thebeatles.com", password)
+
+        response = self.client.post("/api/token/", data={"username": username, "password": password})
+        self.assertEquals(response.status_code, 200)
+
         credit_card = CreditCard(holder="Fulano", number="4539578763621486", exp_date=datetime.date(2023, 12, 31))
         credit_card.save()
+
+        token = response.data["access"]
+
+        self.client.credentials(HTTP_AUTHORIZATION="Bearer " + token)
         response = self.client.get("/api/v1/credit-card/")
         self.assertEquals(response.status_code, 200)

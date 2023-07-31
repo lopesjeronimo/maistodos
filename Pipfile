@@ -9,6 +9,7 @@ python-creditcard = {editable = true, ref = "main", git = "https://github.com/ma
 django-cryptography = "*"
 djangorestframework = "*"
 psycopg = {extras = ["binary"], version = "*"}
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 black = "*"

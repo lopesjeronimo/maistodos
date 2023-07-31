@@ -23,3 +23,4 @@ class CreateListRetrieveViewSet(
 class CreditCardViewSet(CreateListRetrieveViewSet):
     queryset = CreditCard.objects.all()
     serializer_class = CreditCardSerializer
+    permission_classes = [IsAuthenticated]
