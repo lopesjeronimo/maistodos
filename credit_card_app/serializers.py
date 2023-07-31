@@ -4,7 +4,7 @@ import datetime
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from credit_card_app.models import CreditCard
+from credit_card_app.models import CreditCard, credid_card_number_validator
 
 
 def future_date_validator(value: datetime.date):
@@ -25,7 +25,7 @@ class ExpirationDateField(serializers.DateField):
 class CreditCardSerializer(serializers.ModelSerializer):
     exp_date = ExpirationDateField()
     brand = serializers.CharField(read_only=True)
-    number = serializers.CharField()
+    number = serializers.CharField(validators=[credid_card_number_validator])
 
     class Meta:
         model = CreditCard

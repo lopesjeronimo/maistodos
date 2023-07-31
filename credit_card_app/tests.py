@@ -60,6 +60,15 @@ class CreditCardSerializerTests(TestCase):
         self.assertEquals(credit_card.brand, "visa")
 
     @freezegun.freeze_time("2023-08-05")
+    def test_invalid_number(self):
+        payload = {"holder": "Fulano", "number": "0000000000000001", "exp_date": "06/2030"}
+
+        credit_card_serializer = CreditCardSerializer(data=payload)
+        with self.assertRaises(rest_framework.exceptions.ValidationError):
+            credit_card_serializer.is_valid(raise_exception=True)
+            credit_card_serializer.save()
+
+    @freezegun.freeze_time("2023-08-05")
     def test_invalid_exp_date(self):
         payload = {"holder": "Fulano", "number": "4539578763621486", "exp_date": "2023-07"}
         credit_card_serializer = CreditCardSerializer(data=payload)
@@ -79,7 +88,7 @@ class CreditCardSerializerTests(TestCase):
 class CreditCardAPITests(APITestCase):
     def test_unauthenticated(self):
         response = self.client.get("/api/v1/credit-card/")
-        self.assertEquals(response.status_code, 403)
+        self.assertEquals(response.status_code, 401)
 
     def test_list(self):
         username = "john"

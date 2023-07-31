@@ -60,7 +60,7 @@ Formato de Resposta
 ```
 Basta utilizar o access token nas demais requisições
 ```http request
-GET http://localhost:8000/api/credit-card
+GET http://localhost:8000/api/v1/credit-card/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkwODI1MTQzLCJpYXQiOjE2OTA4MjQ4NDMsImp0aSI6IjVhNTZmNWM5ZWM0NDQ4NDNiNDc4ZDA5NjA0Y2FmY2EyIiwidXNlcl9pZCI6M30.Bh1ACfZd82m8G8Smps3PxoKcckiLPzhgU7dHLd3rnDE
 ```
 
