@@ -1,5 +1,6 @@
 import datetime
 
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 from credit_card_app.models import CreditCard
@@ -14,3 +15,8 @@ class CreditCardModelTests(TestCase):
 
     def test_valid_credit_card(self):
         self.valid_credit_card.full_clean()
+
+    def test_invalid_holder(self):
+        self.valid_credit_card.holder = "A"
+        with self.assertRaises(ValidationError):
+            self.valid_credit_card.full_clean()
