@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "084781a69d61c49b5b208f3cd3490b8bca7c51866990e638e542d4f8b0d6ff34"
+            "sha256": "1b27cc1e9418368f3b76d379bb7080ec75b529c50a5115903f8803d863bc31d5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -146,6 +146,14 @@
             "index": "pypi",
             "version": "==1.1"
         },
+        "djangorestframework": {
+            "hashes": [
+                "sha256:579a333e6256b09489cbe0a067e66abe55c6595d8926be6b99423786334350c8",
+                "sha256:eb63f58c9f218e1a7d064d17a70751f528ed4e1d35547fdade9aaf4cd103fd08"
+            ],
+            "index": "pypi",
+            "version": "==3.14.0"
+        },
         "pycparser": {
             "hashes": [
                 "sha256:8ee45429555515e1f6b185e78100aea234072576aa43ab53aefcae078162fca9",
@@ -157,6 +165,13 @@
             "editable": true,
             "git": "https://github.com/maistodos/python-creditcard.git",
             "ref": "6b6bcc5d975985337c35e5c1a4f87d861bcac731"
+        },
+        "pytz": {
+            "hashes": [
+                "sha256:1d8ce29db189191fb55338ee6d0387d82ab59f3d00eac103412d64e0ebd0c588",
+                "sha256:a151b3abb88eda1d4e34a9814df37de2a80e301e68ba0fd856fb9b46bfbbbffb"
+            ],
+            "version": "==2023.3"
         },
         "sqlparse": {
             "hashes": [

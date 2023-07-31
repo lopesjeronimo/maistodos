@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 from credit_card_app.models import CreditCard
+from credit_card_app.serializers import CreditCardSerializer
 
 
 # Create your tests here.
@@ -35,3 +36,21 @@ class CreditCardModelTests(TestCase):
         with self.assertRaises(ValidationError):
             self.credit_card.full_clean()
             self.credit_card.save()
+
+
+
+class CreditCardSerializerTests(TestCase):
+
+    def test_valid_payload(self):
+        payload = {
+            "holder": "Fulano",
+            "number": "4539578763621486",
+            "exp_date": "06/2030"
+        }
+
+        credit_card_serializer = CreditCardSerializer(data=payload)
+        assert credit_card_serializer.is_valid(raise_exception=True)
+        credit_card_serializer.save()
+
+        credit_card: CreditCard = CreditCard.objects.last()
+        self.assertEquals(credit_card.exp_date, datetime.date(2030, 6, 30))
